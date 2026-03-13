@@ -53,11 +53,11 @@ public class RelacionValidator
             string? conceptoRecaudo = ObtenerPrimerConceptoRecaudo(u);
 
             // ---- Validaciones en Consultas ----
-            if (u.Consultas != null)
+            if (u.ConsultasEfectivas != null)
             {
-                for (int j = 0; j < u.Consultas.Count; j++)
+                for (int j = 0; j < u.ConsultasEfectivas.Count; j++)
                 {
-                    var c = u.Consultas[j];
+                    var c = u.ConsultasEfectivas[j];
                     string p = $"{prefijo}.consultas[{j}]";
 
                     // CIE10 sexo vs codSexo
@@ -106,11 +106,11 @@ public class RelacionValidator
             }
 
             // ---- Validaciones en Procedimientos ----
-            if (u.Procedimientos != null)
+            if (u.ProcedimientosEfectivos != null)
             {
-                for (int j = 0; j < u.Procedimientos.Count; j++)
+                for (int j = 0; j < u.ProcedimientosEfectivos.Count; j++)
                 {
-                    var pr = u.Procedimientos[j];
+                    var pr = u.ProcedimientosEfectivos[j];
                     string p = $"{prefijo}.procedimientos[{j}]";
 
                     if (!string.IsNullOrWhiteSpace(pr.CodDiagnosticoPrincipal))
@@ -134,11 +134,11 @@ public class RelacionValidator
             }
 
             // ---- Validaciones en Hospitalización ----
-            if (u.Hospitalizacion != null)
+            if (u.HospitalizacionEfectiva != null)
             {
-                for (int j = 0; j < u.Hospitalizacion.Count; j++)
+                for (int j = 0; j < u.HospitalizacionEfectiva.Count; j++)
                 {
-                    var h = u.Hospitalizacion[j];
+                    var h = u.HospitalizacionEfectiva[j];
                     string p = $"{prefijo}.hospitalizacion[{j}]";
 
                     if (!string.IsNullOrWhiteSpace(h.CodDiagnosticoPrincipal))
@@ -167,12 +167,12 @@ public class RelacionValidator
 
     private static string? ObtenerPrimerConceptoRecaudo(UsuarioRips u)
     {
-        if (u.Consultas?.Any(x => x.ConceptoRecaudo != null) == true)
-            return u.Consultas.First(x => x.ConceptoRecaudo != null).ConceptoRecaudo;
-        if (u.Procedimientos?.Any(x => x.ConceptoRecaudo != null) == true)
-            return u.Procedimientos.First(x => x.ConceptoRecaudo != null).ConceptoRecaudo;
-        if (u.Hospitalizacion?.Any(x => x.ConceptoRecaudo != null) == true)
-            return u.Hospitalizacion.First(x => x.ConceptoRecaudo != null).ConceptoRecaudo;
+        if (u.ConsultasEfectivas?.Any(x => x.ConceptoRecaudo != null) == true)
+            return u.ConsultasEfectivas.First(x => x.ConceptoRecaudo != null).ConceptoRecaudo;
+        if (u.ProcedimientosEfectivos?.Any(x => x.ConceptoRecaudo != null) == true)
+            return u.ProcedimientosEfectivos.First(x => x.ConceptoRecaudo != null).ConceptoRecaudo;
+        if (u.HospitalizacionEfectiva?.Any(x => x.ConceptoRecaudo != null) == true)
+            return u.HospitalizacionEfectiva.First(x => x.ConceptoRecaudo != null).ConceptoRecaudo;
         return null;
     }
 

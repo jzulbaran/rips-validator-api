@@ -43,20 +43,23 @@ public class EstructuraValidator
             if (string.IsNullOrWhiteSpace(u.TipoUsuario))
                 hallazgos.Add(Error("RVE015", $"{prefijo}.tipoUsuario", "Campo obligatorio ausente"));
 
-            if (string.IsNullOrWhiteSpace(u.CoberturaPlan))
+            // coberturaPlan es obligatorio solo si no viene anidado en servicios
+            if (string.IsNullOrWhiteSpace(u.CoberturaPlan) && u.Servicios == null)
                 hallazgos.Add(Error("RVE016", $"{prefijo}.coberturaPlan", "Campo obligatorio ausente"));
 
-            if (string.IsNullOrWhiteSpace(u.FechaInicioAtencion))
-                hallazgos.Add(Error("RVE017", $"{prefijo}.fechaInicioAtencion", "Campo obligatorio ausente"));
-            else if (!EsFechaValida(u.FechaInicioAtencion, out var fechaInicio) && !EsFechaHoraValida(u.FechaInicioAtencion, out fechaInicio))
-                hallazgos.Add(Error("RVE018", $"{prefijo}.fechaInicioAtencion", $"Formato de fecha inválido: '{u.FechaInicioAtencion}'"));
+            // fechaInicioAtencion es obligatoria a nivel usuario solo si no viene en servicios
+            if (!string.IsNullOrWhiteSpace(u.FechaInicioAtencion))
+            {
+                if (!EsFechaValida(u.FechaInicioAtencion, out _) && !EsFechaHoraValida(u.FechaInicioAtencion, out _))
+                    hallazgos.Add(Error("RVE018", $"{prefijo}.fechaInicioAtencion", $"Formato de fecha inválido: '{u.FechaInicioAtencion}'"));
+            }
 
             // Validar servicios
-            ValidarConsultas(u.Consultas, $"{prefijo}.consultas", hallazgos);
-            ValidarProcedimientos(u.Procedimientos, $"{prefijo}.procedimientos", hallazgos);
-            ValidarHospitalizacion(u.Hospitalizacion, $"{prefijo}.hospitalizacion", hallazgos);
-            ValidarMedicamentos(u.Medicamentos, $"{prefijo}.medicamentos", hallazgos);
-            ValidarOtrosServicios(u.OtrosServicios, $"{prefijo}.otrosServicios", hallazgos);
+            ValidarConsultas(u.ConsultasEfectivas, $"{prefijo}.consultas", hallazgos);
+            ValidarProcedimientos(u.ProcedimientosEfectivos, $"{prefijo}.procedimientos", hallazgos);
+            ValidarHospitalizacion(u.HospitalizacionEfectiva, $"{prefijo}.hospitalizacion", hallazgos);
+            ValidarMedicamentos(u.MedicamentosEfectivos, $"{prefijo}.medicamentos", hallazgos);
+            ValidarOtrosServicios(u.OtrosServiciosEfectivos, $"{prefijo}.otrosServicios", hallazgos);
         }
 
         return hallazgos;

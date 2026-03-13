@@ -6,7 +6,13 @@ using RipsValidatorApi.Validators;
 var builder = WebApplication.CreateBuilder(args);
 
 // Controllers
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(opts =>
+    {
+        // El RIPS de SaludSystem mezcla strings y números (ej: codServicio: 129 o "129")
+        opts.JsonSerializerOptions.Converters.Add(new RipsValidatorApi.Models.StringOrNumberConverter());
+        opts.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    });
 
 // EF Core + SQL Server
 builder.Services.AddDbContext<ValidadorDbContext>(options =>

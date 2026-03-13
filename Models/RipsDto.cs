@@ -32,6 +32,38 @@ public class UsuarioRips
     public string? NumPolizaAfiliado { get; set; }
     public string? CopagoCuotaModeradora { get; set; }
     public string? NumFEVIPACAP { get; set; }
+
+    // Servicios pueden venir anidados en un objeto "servicios" (formato actual SaludSystem)
+    // o directamente en el usuario (formato Res. 2275 puro)
+    public ServiciosRips? Servicios { get; set; }
+
+    // Acceso unificado — prioriza el wrapper si existe
+    [System.Text.Json.Serialization.JsonIgnore]
+    public List<Consulta>? ConsultasEfectivas => Servicios?.Consultas ?? _consultas;
+    [System.Text.Json.Serialization.JsonIgnore]
+    public List<Procedimiento>? ProcedimientosEfectivos => Servicios?.Procedimientos ?? _procedimientos;
+    [System.Text.Json.Serialization.JsonIgnore]
+    public List<HospitalizacionRips>? HospitalizacionEfectiva => Servicios?.Hospitalizacion ?? _hospitalizacion;
+    [System.Text.Json.Serialization.JsonIgnore]
+    public List<Medicamento>? MedicamentosEfectivos => Servicios?.Medicamentos ?? _medicamentos;
+    [System.Text.Json.Serialization.JsonIgnore]
+    public List<OtroServicio>? OtrosServiciosEfectivos => Servicios?.OtrosServicios ?? _otrosServicios;
+
+    private List<Consulta>? _consultas;
+    private List<Procedimiento>? _procedimientos;
+    private List<HospitalizacionRips>? _hospitalizacion;
+    private List<Medicamento>? _medicamentos;
+    private List<OtroServicio>? _otrosServicios;
+
+    public List<Consulta>? Consultas { get => _consultas; set => _consultas = value; }
+    public List<Procedimiento>? Procedimientos { get => _procedimientos; set => _procedimientos = value; }
+    public List<HospitalizacionRips>? Hospitalizacion { get => _hospitalizacion; set => _hospitalizacion = value; }
+    public List<Medicamento>? Medicamentos { get => _medicamentos; set => _medicamentos = value; }
+    public List<OtroServicio>? OtrosServicios { get => _otrosServicios; set => _otrosServicios = value; }
+}
+
+public class ServiciosRips
+{
     public List<Consulta>? Consultas { get; set; }
     public List<Procedimiento>? Procedimientos { get; set; }
     public List<HospitalizacionRips>? Hospitalizacion { get; set; }
@@ -60,6 +92,7 @@ public class Consulta
     public string? ViaIngresoUsuario { get; set; }
     public decimal? ValorPagoModerador { get; set; }
     public decimal? ValorNetoPagar { get; set; }
+    public decimal? VrServicio { get; set; }  // alias de ValorNetoPagar en formato SaludSystem
     public string? ConceptoRecaudo { get; set; }
     public string? PagoCompartido { get; set; }
 }

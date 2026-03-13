@@ -53,11 +53,11 @@ public class ContenidoValidator
             }
 
             // Consultas
-            if (u.Consultas != null)
+            if (u.ConsultasEfectivas != null)
             {
-                for (int j = 0; j < u.Consultas.Count; j++)
+                for (int j = 0; j < u.ConsultasEfectivas.Count; j++)
                 {
-                    var c = u.Consultas[j];
+                    var c = u.ConsultasEfectivas[j];
                     string p = $"{prefijo}.consultas[{j}]";
 
                     ValidarCie10(c.CodDiagnosticoPrincipal, $"{p}.codDiagnosticoPrincipal", codsCie10, hallazgos, "RVC020");
@@ -76,11 +76,11 @@ public class ContenidoValidator
             }
 
             // Procedimientos
-            if (u.Procedimientos != null)
+            if (u.ProcedimientosEfectivos != null)
             {
-                for (int j = 0; j < u.Procedimientos.Count; j++)
+                for (int j = 0; j < u.ProcedimientosEfectivos.Count; j++)
                 {
-                    var pr = u.Procedimientos[j];
+                    var pr = u.ProcedimientosEfectivos[j];
                     string p = $"{prefijo}.procedimientos[{j}]";
 
                     ValidarCie10(pr.CodDiagnosticoPrincipal, $"{p}.codDiagnosticoPrincipal", codsCie10, hallazgos, "RVC030");
@@ -98,11 +98,11 @@ public class ContenidoValidator
             }
 
             // Hospitalización
-            if (u.Hospitalizacion != null)
+            if (u.HospitalizacionEfectiva != null)
             {
-                for (int j = 0; j < u.Hospitalizacion.Count; j++)
+                for (int j = 0; j < u.HospitalizacionEfectiva.Count; j++)
                 {
-                    var h = u.Hospitalizacion[j];
+                    var h = u.HospitalizacionEfectiva[j];
                     string p = $"{prefijo}.hospitalizacion[{j}]";
 
                     ValidarCie10(h.CodDiagnosticoPrincipal, $"{p}.codDiagnosticoPrincipal", codsCie10, hallazgos, "RVC040");
