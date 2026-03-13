@@ -23,8 +23,10 @@ builder.Services.AddTransient<EstructuraValidator>();
 builder.Services.AddTransient<ContenidoValidator>();
 builder.Services.AddTransient<RelacionValidator>();
 
-// Service
+// Services
 builder.Services.AddScoped<IValidadorRipsService, ValidadorRipsService>();
+builder.Services.AddScoped<IValidadorFacturaService, ValidadorFacturaService>();
+builder.Services.AddTransient<FacturaXmlValidator>();
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
